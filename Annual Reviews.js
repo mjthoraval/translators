@@ -69,7 +69,7 @@ function addByBibTex(doi, tags, doc) {
 			// Remove the citation key
 			if (item.itemID) item.itemID = undefined;
 
-			// Remove the "type" field 
+			// Remove the "type" field
 			if (item.type) item.type = undefined;
 			
 			// Add tags
@@ -112,7 +112,6 @@ function detectWeb(doc, url) {
 			|| url.match(/\/content\/journals\/[^/]+$/) // journal home
 			|| url.includes('/toc/') || url.includes('/journal/')
 			|| url.includes('showMost') || url.includes('search')) {
-		
 		// Try TOC results first
 		if (getTOCResults(doc, true)) {
 			return 'multiple';
@@ -230,7 +229,8 @@ function scrape(doc, url) {
 		
 		// Call addByBibTex with the extracted DOI
 		addByBibTex(doi, tags, doc);
-	} else {
+	}
+	else {
 		Zotero.debug("Annual Reviews: Could not extract DOI from URL");
 	}
 }
