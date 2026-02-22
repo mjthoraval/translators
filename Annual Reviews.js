@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2026-02-22 10:54:38"
+	"lastUpdated": "2026-02-22 12:18:28"
 }
 
 /**
@@ -37,14 +37,14 @@ function addByBibTex(doi, tags, doc) {
 	var bibtexUrl = baseUrl + '/content/journals/' + doi + '/cite/bibtex';
 	var pdfUrl = baseUrl + '/doi/pdf/' + doi;
 	
-	Zotero.Utilities.HTTP.doGet(bibtexUrl, function(text) {
+	Zotero.Utilities.HTTP.doGet(bibtexUrl, function (text) {
 		if (!text || text.length < 10) return;
 		
 		var translator = Zotero.loadTranslator('import');
 		translator.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4'); // BibTeX
 		translator.setString(text);
 		
-		translator.setHandler('itemDone', function(obj, item) {
+		translator.setHandler('itemDone', function (obj, item) {
 			// title is sometimes in all caps
 			if (item.title == item.title.toUpperCase()) {
 				item.title = ZU.capitalizeTitle(item.title, true);
@@ -59,7 +59,7 @@ function addByBibTex(doi, tags, doc) {
 			
 			if (item.DOI && item.DOI.startsWith('https://')) {
 				// Match both hyphen and dot formats
-				let doiMatch = item.DOI.match(/10\.\d+\/(?:annurev[.-])[^\/]+/);
+				let doiMatch = item.DOI.match(/10\.\d+\/(?:annurev[.-])[^/]+/);
 				if (doiMatch) {
 					item.DOI = doiMatch[0];
 					Zotero.debug("Cleaned DOI: " + item.DOI);
@@ -106,10 +106,10 @@ function detectWeb(doc, url) {
 	}
 	
 	// Multiple items pages
-	if (url.match(/\/content\/journals\/[^\/]+\/\d+\/\d+/) ||  // volume/issue
-		url.match(/\/content\/journals\/[^\/]+\/fasttrack/) ||  // fasttrack
-		url.match(/\/content\/journals\/[^\/]+\/browse/) ||     // browse
-		url.match(/\/content\/journals\/[^\/]+$/) ||            // journal home
+	if (url.match(/\/content\/journals\/[^/]+\/\d+\/\d+/) || // volume/issue
+		url.match(/\/content\/journals\/[^/]+\/fasttrack/) || // fasttrack
+		url.match(/\/content\/journals\/[^/]+\/browse/) || // browse
+		url.match(/\/content\/journals\/[^/]+$/) || // journal home
 		url.includes('/toc/') || url.includes('/journal/') ||
 		url.includes('showMost') || url.includes('search')) {
 		
@@ -136,7 +136,7 @@ function getSearchResults(doc, checkOnly) {
 		if (!row) continue;
 		
 		var href = link.getAttribute('href');
-		var doiMatch = href.match(/10\.\d+\/annurev-[^\/]+/);
+		var doiMatch = href.match(/10\.\d+\/annurev-[^/]+/);
 		if (!doiMatch) continue;
 		
 		var doi = doiMatch[0];
@@ -167,7 +167,7 @@ function getTOCResults(doc, checkOnly) {
 	
 	for (let link of links) {
 		var href = link.getAttribute('href');
-		var doiMatch = href.match(/10\.\d+\/(?:annurev[.-])[^\/]+/);
+		var doiMatch = href.match(/10\.\d+\/(?:annurev[.-])[^/]+/);
 		if (!doiMatch) continue;
 		
 		var doi = doiMatch[0];
@@ -196,7 +196,7 @@ function doWeb(doc, url) {
 		if (results) {
 			Zotero.selectItems(results, function (items) {
 				if (items) {
-					Object.keys(items).forEach(function(doi) {
+					Object.keys(items).forEach(function (doi) {
 						addByBibTex(doi, [], null);
 					});
 				}
@@ -214,7 +214,7 @@ function scrape(doc, url) {
 	Zotero.debug("Annual Reviews scrape called with URL: " + url);
 	
 	// Extract DOI from ANY Annual Reviews URL pattern
-	var doiMatch = url.match(/(10\.\d+\/annurev[^\/\?#]+)/);
+	var doiMatch = url.match(/(10\.\d+\/annurev[^/?#]+)/);
 	
 	if (doiMatch) {
 		var doi = doiMatch[1];
