@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2026-02-22 12:18:28"
+	"lastUpdated": "2026-02-22 13:07:49"
 }
 
 /**
@@ -106,12 +106,12 @@ function detectWeb(doc, url) {
 	}
 	
 	// Multiple items pages
-	if (url.match(/\/content\/journals\/[^/]+\/\d+\/\d+/) || // volume/issue
-		url.match(/\/content\/journals\/[^/]+\/fasttrack/) || // fasttrack
-		url.match(/\/content\/journals\/[^/]+\/browse/) || // browse
-		url.match(/\/content\/journals\/[^/]+$/) || // journal home
-		url.includes('/toc/') || url.includes('/journal/') ||
-		url.includes('showMost') || url.includes('search')) {
+	if (url.match(/\/content\/journals\/[^/]+\/\d+\/\d+/) // volume/issue
+			|| url.match(/\/content\/journals\/[^/]+\/fasttrack/) // fasttrack
+			|| url.match(/\/content\/journals\/[^/]+\/browse/) // browse
+			|| url.match(/\/content\/journals\/[^/]+$/) // journal home
+			|| url.includes('/toc/') || url.includes('/journal/')
+			|| url.includes('showMost') || url.includes('search')) {
 		
 		// Try TOC results first
 		if (getTOCResults(doc, true)) {
